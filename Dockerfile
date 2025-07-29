@@ -1,22 +1,17 @@
-# Usa uma imagem oficial do Python com menos camadas (mais leve)
+# Usa uma imagem leve do Python 3.10
 FROM python:3.10-slim
 
 # Define o diretório de trabalho dentro do container
 WORKDIR /app
 
-# Copia os arquivos do projeto para o container
-# O ponto (.) significa tudo do diretório atual (inclusive subpastas)
+# Copia todos os arquivos da raiz do projeto para o diretório /app no container
 COPY . .
 
-# Instala as dependências listadas no requirements.txt
+# Instala as dependências a partir do requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Expõe a porta usada pela aplicação Flask (via gunicorn)
+# Expõe a porta 5000 usada pelo Flask e pelo Gunicorn
 EXPOSE 5000
 
-# Comando para iniciar o servidor WSGI com gunicorn
-# api.main:app significa:
-#   - "api" é a pasta
-#   - "main" é o nome do arquivo Python (main.py)
-#   - "app" é a variável Flask dentro desse arquivo
+# Comando para iniciar a aplicação usando Gunicorn, apontando para o objeto app dentro de api/main.py
 CMD ["gunicorn", "--bind", "0.0.0.0:5000", "api.main:app"]
