@@ -4,7 +4,7 @@ from tensorflow.keras.models import load_model
 import numpy as np
 
 app = Flask(__name__)
-model = load_model('notebook/model/lstm_model.keras')
+model = load_model('model/lstm_model.keras')
 
 @app.route('/health', methods=['GET'])
 def health():
