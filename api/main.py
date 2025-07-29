@@ -12,8 +12,11 @@ def health():
 
 @app.route('/predict', methods=['POST'])
 def predict():
+    data = request.get_json(force=True)
+    sequence = np.array(data['sequence']).reshape(1, -1, 1)
     prediction = model.predict(sequence)
     return jsonify({'prediction': float(prediction[0][0])})
+
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
