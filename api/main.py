@@ -1,4 +1,5 @@
 # from keras.models import load_model
+from prometheus_flask_exporter import PrometheusMetrics
 from flask import Flask, request, jsonify, g
 from tensorflow.keras.models import load_model
 import numpy as np
@@ -7,6 +8,8 @@ import logging
 
 # Inicializa a aplicação Flask
 app = Flask(__name__)
+
+metrics = PrometheusMetrics(app)
 
 # Configura o logging
 logging.basicConfig(level=logging.INFO)
